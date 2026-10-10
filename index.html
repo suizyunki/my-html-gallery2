@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>LevelOverlay1 | 水準器×傾斜×画像 新次元クリエイティブツール</title>
   
-  <!-- Google Fonts: Orbitron & Noto Sans JP -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500;700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500;700;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================
-       RESET & BASE DESIGN
+       RESET & BASE THEME
        ========================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
@@ -24,23 +24,23 @@
     :root {
       --bg-dark: #05070B;
       --accent-cyan: #00F0FF;
-      --accent-purple: #8A2BE2;
-      --accent-gold: #FFD700;
+      --accent-purple: #9D00FF;
+      --accent-neon: #39FF14;
       --text-main: #FFFFFF;
       --text-muted: rgba(255, 255, 255, 0.7);
-      --glass-bg: rgba(16, 22, 34, 0.65);
-      --glass-border: rgba(0, 240, 255, 0.2);
+      --glass-bg: rgba(14, 20, 32, 0.75);
+      --glass-border: rgba(0, 240, 255, 0.25);
     }
 
     body {
       background-color: var(--bg-dark);
       color: var(--text-main);
       font-family: 'Noto Sans JP', sans-serif;
-      overflow-x: hidden;
+      overflow: hidden;
       user-select: none;
     }
 
-    /* サイバーグリッド背景とアンビエントライト */
+    /* サイバー背景 */
     .bg-grid {
       position: fixed;
       top: 0;
@@ -57,15 +57,15 @@
 
     .ambient-glow {
       position: fixed;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(0, 240, 255, 0.12) 0%, rgba(138, 43, 226, 0.05) 45%, transparent 70%);
+      width: 650px;
+      height: 650px;
+      background: radial-gradient(circle, rgba(0, 240, 255, 0.12) 0%, rgba(157, 0, 255, 0.08) 50%, transparent 70%);
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       pointer-events: none;
       z-index: 1;
-      filter: blur(80px);
+      filter: blur(90px);
     }
 
     /* ==========================================================
@@ -91,44 +91,43 @@
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      padding: 5vh 20px 4vh;
+      padding: 5vh 20px 3.5vh;
       box-sizing: border-box;
       overflow: hidden;
     }
 
     /* ==========================================================
-       FLOATING HUD & NAVIGATION
+       HUD & NAVIGATION
        ========================================================== */
     .hud-header {
       position: fixed;
       top: 20px;
       left: 24px;
-      z-index: 20;
+      z-index: 30;
       display: flex;
       align-items: center;
-      gap: 12px;
       pointer-events: none;
     }
 
     .hud-logo {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 900;
-      letter-spacing: 2px;
-      background: linear-gradient(135deg, #FFF, var(--accent-cyan));
+      letter-spacing: 2.5px;
+      background: linear-gradient(135deg, #FFF 30%, var(--accent-cyan));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .page-dots {
       position: fixed;
-      right: 20px;
+      right: 18px;
       top: 50%;
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      z-index: 20;
+      gap: 12px;
+      z-index: 30;
     }
 
     .dot {
@@ -136,59 +135,58 @@
       height: 7px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.25);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.4s ease;
       cursor: pointer;
     }
 
     .dot.active {
-      height: 28px;
+      height: 26px;
       border-radius: 4px;
       background: var(--accent-cyan);
       box-shadow: 0 0 12px var(--accent-cyan);
     }
 
     /* ==========================================================
-       TYPOGRAPHY & CARDS
+       CAPTION CARDS
        ========================================================== */
     .caption-box {
       background: var(--glass-bg);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
-      border-radius: 18px;
-      padding: 14px 24px;
-      max-width: 650px;
-      width: 90%;
+      border-radius: 20px;
+      padding: 14px 26px;
+      max-width: 680px;
+      width: 92%;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 240, 255, 0.08);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), inset 0 0 16px rgba(0, 240, 255, 0.08);
       z-index: 10;
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(22px);
       transition: all 0.7s cubic-bezier(0.2, 0.9, 0.3, 1);
     }
 
     .caption-tag {
       display: inline-block;
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       letter-spacing: 2px;
       color: var(--accent-cyan);
-      margin-bottom: 6px;
-      text-transform: uppercase;
+      margin-bottom: 5px;
     }
 
     .caption-title {
       font-size: 1.25rem;
       font-weight: 700;
       line-height: 1.4;
-      background: linear-gradient(180deg, #FFFFFF 30%, #CFD8DC 100%);
+      background: linear-gradient(180deg, #FFFFFF 30%, #DFE7EC 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 4px;
     }
 
     .caption-desc {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
       line-height: 1.5;
       font-weight: 300;
@@ -199,6 +197,24 @@
       transform: translateY(0);
     }
 
+    /* ② 第1ページ専用のスタイル（文言大きめ、画像小さめ） */
+    #sec-1 .caption-box {
+      padding: 20px 28px;
+    }
+    #sec-1 .caption-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+    #sec-1 .caption-desc {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+    #sec-1 .media-content {
+      max-height: 42vh; /* 画像を少し小さめに */
+      max-width: 72vw;
+    }
+
     /* ==========================================================
        MEDIA CONTAINERS (1〜4)
        ========================================================== */
@@ -206,12 +222,11 @@
       position: relative;
       flex: 1;
       width: 100%;
-      max-width: 780px;
+      max-width: 800px;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 15px 0;
-      perspective: 1000px;
+      margin: 10px 0;
     }
 
     .media-content {
@@ -219,166 +234,275 @@
       max-width: 88vw;
       border-radius: 20px;
       object-fit: contain;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 240, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65), 0 0 25px rgba(0, 240, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: transform 0.8s ease;
     }
 
     .section.is-active .media-content {
-      animation: floatMotion 5s ease-in-out infinite alternate;
+      animation: gentleFloat 4.5s ease-in-out infinite alternate;
     }
 
-    @keyframes floatMotion {
-      0% { transform: translateY(0) scale(1); }
-      100% { transform: translateY(-8px) scale(1.01); }
-    }
-
-    /* ==========================================================
-       SECTION 4: VIDEO & SWIPE PROMPT
-       ========================================================== */
-    .video-wrapper {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .video-overlay-badge {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: rgba(0, 0, 0, 0.65);
-      border: 1px solid var(--accent-cyan);
-      color: var(--accent-cyan);
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.7rem;
-      padding: 4px 10px;
-      border-radius: 20px;
-      letter-spacing: 1px;
+    @keyframes gentleFloat {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-7px); }
     }
 
     .next-guide {
-      display: flex;
-      align-items: center;
-      gap: 8px;
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.85rem;
-      letter-spacing: 3px;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
       color: var(--accent-cyan);
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.5s ease;
       cursor: pointer;
+      animation: pulseGuide 1.8s infinite;
     }
 
-    .next-guide.visible {
-      opacity: 1;
-      transform: translateY(0);
-      animation: pulseGlow 1.8s infinite;
-    }
-
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.6; transform: translateY(0); }
+    @keyframes pulseGuide {
+      0%, 100% { opacity: 0.5; transform: translateY(0); }
       50% { opacity: 1; transform: translateY(4px); }
     }
 
     /* ==========================================================
-       SECTION 5: THE GRAND FINALE (ズームイン→中央縮小)
+       PAGE 4: VIDEO STYLING
+       ========================================================== */
+    .video-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid var(--accent-cyan);
+      color: var(--accent-cyan);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.68rem;
+      padding: 3px 9px;
+      border-radius: 12px;
+    }
+
+    /* ==========================================================
+       PAGE 5: 左から右へ流れる画像群 ＆ 元画像/編集後 の光沢演出
        ========================================================== */
     #sec-5 {
-      justify-content: center;
+      padding: 4vh 0 3vh;
     }
 
-    .finale-container {
+    .marquee-container {
+      width: 100vw;
+      overflow: hidden;
       position: relative;
+      margin: 15px 0;
+      padding: 15px 0;
+    }
+
+    /* 左右のフェードマスク */
+    .marquee-container::before,
+    .marquee-container::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 15vw;
+      height: 100%;
+      z-index: 5;
+      pointer-events: none;
+    }
+    .marquee-container::before {
+      left: 0;
+      background: linear-gradient(to right, var(--bg-dark), transparent);
+    }
+    .marquee-container::after {
+      right: 0;
+      background: linear-gradient(to left, var(--bg-dark), transparent);
+    }
+
+    /* 左から右へ無限に流れるトラック */
+    .marquee-track {
+      display: flex;
+      gap: 24px;
+      width: max-content;
+      animation: streamLeftToRight 28s linear infinite;
+    }
+
+    .marquee-container:hover .marquee-track {
+      animation-play-state: paused; /* ホバーでじっくり見れる */
+    }
+
+    @keyframes streamLeftToRight {
+      0% {
+        transform: translateX(-50%);
+      }
+      100% {
+        transform: translateX(0%);
+      }
+    }
+
+    /* 各画像カード */
+    .stream-card {
+      position: relative;
+      flex-shrink: 0;
+      width: 200px;
+      height: 270px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #0D131F;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+
+    .stream-img {
       width: 100%;
       height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
+      object-fit: cover;
+      display: block;
     }
 
-    .finale-top {
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: all 1s ease 0.6s;
-    }
-
-    .finale-bottom {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 1s ease 0.6s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .finale-img-holder {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex: 1;
-      width: 100%;
-    }
-
-    /* 到達時：画面一杯の超拡大から、中央にキュッと収まる */
-    .finale-img {
-      max-height: 40vh;
-      max-width: 75vw;
-      border-radius: 20px;
-      object-fit: contain;
-      box-shadow: 0 0 50px rgba(0, 240, 255, 0.35);
-      border: 1px solid rgba(0, 240, 255, 0.4);
-      transform: scale(2.4);
-      opacity: 0;
-      filter: blur(10px);
-      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-                  opacity 0.8s ease,
-                  filter 0.8s ease;
-    }
-
-    #sec-5.is-active .finale-img {
-      transform: scale(1);
-      opacity: 1;
-      filter: blur(0);
-    }
-
-    #sec-5.is-active .finale-top,
-    #sec-5.is-active .finale-bottom {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .cta-button {
-      background: linear-gradient(135deg, var(--accent-cyan), #0077FE);
-      color: #030814;
+    .card-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
       font-weight: 800;
-      font-size: 1rem;
-      letter-spacing: 1.5px;
-      padding: 14px 36px;
-      border-radius: 40px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 0 25px rgba(0, 240, 255, 0.5);
-      transition: all 0.3s ease;
-      font-family: 'Orbitron', 'Noto Sans JP', sans-serif;
+      letter-spacing: 1px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      z-index: 3;
     }
 
-    .cta-button:hover {
+    /* --- [元画像 3, 6, 8] の演出 --- */
+    .card-original {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      filter: brightness(0.85) contrast(0.95);
+    }
+    .card-original .card-badge {
+      background: rgba(0, 0, 0, 0.7);
+      color: #BBB;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* --- [編集後 5, 7, 9] の光沢・強調演出 --- */
+    .card-edited {
+      border: 2px solid var(--accent-cyan);
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.45), 0 0 45px rgba(157, 0, 255, 0.3);
       transform: scale(1.05);
-      box-shadow: 0 0 35px rgba(0, 240, 255, 0.8);
+    }
+    .card-edited .card-badge {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      color: #000;
+      box-shadow: 0 0 10px var(--accent-cyan);
     }
 
-    /* スマホ最適化 */
+    /* 表面を斜めに光が走るシャイン（光沢）アニメーション */
+    .card-edited::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -100%;
+      width: 60%;
+      height: 200%;
+      background: linear-gradient(
+        60deg,
+        rgba(255, 255, 255, 0) 20%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 80%
+      );
+      transform: rotate(25deg);
+      animation: shineSwipe 3.2s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    @keyframes shineSwipe {
+      0% { left: -100%; }
+      35%, 100% { left: 160%; }
+    }
+
+    /* ==========================================================
+       ③ PAGE 5: CTA誘導ボタン＆目立たせ演出
+       ========================================================== */
+    .cta-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    /* 「タップしてみて！」の吹き出しバッジ */
+    .cta-bubble {
+      position: relative;
+      background: linear-gradient(135deg, #FF0055, #FF5500);
+      color: #FFF;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 6px 16px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+      animation: bounceBubble 1.4s infinite alternate ease-in-out;
+    }
+
+    .cta-bubble::after {
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 6px 6px 0;
+      border-style: solid;
+      border-color: #FF5500 transparent transparent;
+    }
+
+    @keyframes bounceBubble {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    /* 飛び先リンク付きの豪華なアクションボタン */
+    .cta-link-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--accent-cyan) 0%, #0066FF 100%);
+      color: #030814;
+      font-family: 'Orbitron', 'Noto Sans JP', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      padding: 16px 42px;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.7), inset 0 0 12px rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: pulseAction 2s infinite;
+    }
+
+    @keyframes pulseAction {
+      0%, 100% {
+        box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 40px rgba(0, 240, 255, 0.95), 0 0 20px rgba(157, 0, 255, 0.8);
+        transform: scale(1.03);
+      }
+    }
+
+    .cta-link-btn:hover {
+      transform: scale(1.07);
+      background: linear-gradient(135deg, #FFF 0%, var(--accent-cyan) 100%);
+    }
+
+    /* スマホ対応 */
     @media (max-width: 600px) {
-      .caption-title { font-size: 1.1rem; }
-      .caption-desc { font-size: 0.82rem; }
-      .media-content { max-height: 52vh; }
-      .finale-img { max-height: 34vh; }
-      .cta-button { padding: 12px 28px; font-size: 0.9rem; }
+      #sec-1 .caption-title { font-size: 1.35rem; }
+      #sec-1 .caption-desc { font-size: 0.88rem; }
+      .stream-card { width: 160px; height: 215px; }
+      .cta-link-btn { font-size: 0.92rem; padding: 14px 30px; }
     }
   </style>
 </head>
@@ -393,7 +517,7 @@
     <div class="hud-logo">LEVELOVERLAY // 01</div>
   </header>
 
-  <!-- ページインジケーター（クリックでジャンプ可能） -->
+  <!-- ページナビゲーション（クリックで任意セクションへ） -->
   <nav class="page-dots" aria-label="Page Navigation">
     <div class="dot active" data-index="0" title="Page 1"></div>
     <div class="dot" data-index="1" title="Page 2"></div>
@@ -402,43 +526,43 @@
     <div class="dot" data-index="4" title="Page 5"></div>
   </nav>
 
-  <!-- 全画面スクロールコンテナ -->
+  <!-- スナップコンテナ -->
   <main class="container" id="snapContainer">
 
-    <!-- PAGE 1 -->
+    <!-- PAGE 1: ①画像1と2を入れ替え(2.PNG) & ②文言大きめ・画像小さめ -->
     <section class="section is-active" id="sec-1">
       <div class="caption-box">
-        <span class="caption-tag">STAGE 01 // OVERVIEW</span>
+        <span class="caption-tag">STAGE 01 // WELCOME</span>
         <h2 class="caption-title">新規アプリ「LevelOverlay1」を体験しよう</h2>
-        <p class="caption-desc">水準器 × 傾斜 × 画像。角度を感知する次世代の画像合成アプローチ。</p>
-      </div>
-
-      <div class="media-frame">
-        <img src="1.PNG" alt="LevelOverlay1 Preview 1" class="media-content">
-      </div>
-
-      <div class="next-guide visible">SCROLL / SWIPE DOWN ▼</div>
-    </section>
-
-    <!-- PAGE 2 -->
-    <section class="section" id="sec-2">
-      <div class="caption-box">
-        <span class="caption-tag">STAGE 02 // INTELLIGENT UI</span>
-        <h2 class="caption-title">スタイリッシュで近未来的な操作感</h2>
-        <p class="caption-desc">スマホの傾きに合わせて直感切り貼り。色彩の変容や高解像度保存もお手の物。</p>
+        <p class="caption-desc">水準器 × 傾斜 × 画像。角度を感知する次世代のクリエイティブ。</p>
       </div>
 
       <div class="media-frame">
         <img src="2.PNG" alt="LevelOverlay1 Preview 2" class="media-content">
       </div>
 
-      <div class="next-guide visible">SCROLL FOR MORE ▼</div>
+      <div class="next-guide">SCROLL / SWIPE DOWN ▼</div>
+    </section>
+
+    <!-- PAGE 2: ①画像1と2を入れ替え(1.PNG) & サイズは通常通り -->
+    <section class="section" id="sec-2">
+      <div class="caption-box">
+        <span class="caption-tag">STAGE 02 // STYLISH DESIGN</span>
+        <h2 class="caption-title">スタイリッシュで近未来的な操作感</h2>
+        <p class="caption-desc">スマホの角度で切り貼り可能。色の変化や画像保存もお手の物。</p>
+      </div>
+
+      <div class="media-frame">
+        <img src="1.PNG" alt="LevelOverlay1 Preview 1" class="media-content">
+      </div>
+
+      <div class="next-guide">SCROLL FOR MORE ▼</div>
     </section>
 
     <!-- PAGE 3 -->
     <section class="section" id="sec-3">
       <div class="caption-box">
-        <span class="caption-tag">STAGE 03 // UPGRADE VISION</span>
+        <span class="caption-tag">STAGE 03 // VISION</span>
         <h2 class="caption-title">この水準器画像をもっとかっこよくしたい！</h2>
         <p class="caption-desc">日常の測定ビューを、映画のUIのようなエッジの効いたアートピースへ昇華。</p>
       </div>
@@ -447,7 +571,7 @@
         <img src="3.PNG" alt="LevelOverlay1 Preview 3" class="media-content">
       </div>
 
-      <div class="next-guide visible">WATCH MOTION DEMO ▼</div>
+      <div class="next-guide">WATCH MOTION DEMO ▼</div>
     </section>
 
     <!-- PAGE 4 (VIDEO DEMO) -->
@@ -455,11 +579,11 @@
       <div class="caption-box">
         <span class="caption-tag">STAGE 04 // LIVE DEMO</span>
         <h2 class="caption-title">一度タップで切り抜き、もう一度で貼り付け</h2>
-        <p class="caption-desc">余計なメニューは一切なし。手元のジェスチャーと連動する直感カンタン操作。</p>
+        <p class="caption-desc">直観的カンタン操作。角度と連動して思い通りの構図を即座にクリエイト。</p>
       </div>
 
-      <div class="media-frame video-wrapper">
-        <span class="video-overlay-badge">REC 34S LOOP</span>
+      <div class="media-frame">
+        <span class="video-badge">34S DEMO LOOP</span>
         <video 
           id="featureVideo" 
           src="4.mp4" 
@@ -470,43 +594,108 @@
         ></video>
       </div>
 
-      <!-- 動画再生中/終了時に促すインジケーター -->
-      <div class="next-guide" id="videoNextGuide">SWIPE TO FINALE ▶</div>
+      <div class="next-guide" id="videoNextGuide">SWIPE TO GALLERY ▶</div>
     </section>
 
-    <!-- PAGE 5 (FINALE) -->
+    <!-- PAGE 5: ③ 左から右へ流れる画像群 (3→5→6→7→8→9) & 元画像 vs 編集後 の光沢演出 & 誘導ボタン -->
     <section class="section" id="sec-5">
-      <div class="finale-container">
-        
-        <!-- 上部キャプション -->
-        <div class="caption-box finale-top">
-          <span class="caption-tag">STAGE 05 // YOUR TURN</span>
-          <h2 class="caption-title">さぁ、つぎはあなたの番です！</h2>
-        </div>
-
-        <!-- 拡大から収縮して中央に配置される画像 -->
-        <div class="finale-img-holder">
-          <img src="5.PNG" alt="LevelOverlay1 Final Preview" class="finale-img" id="finaleImg">
-        </div>
-
-        <!-- 下部キャプション ＆ CTA -->
-        <div class="caption-box finale-bottom">
-          <p class="caption-desc" style="font-weight: 500; color: #FFF;">
-            水準器による画像再構築で、日常を超えた最高の体験を。
-          </p>
-          <button class="cta-button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-            EXPERIENCE LevelOverlay1
-          </button>
-        </div>
-
+      <!-- 上部文言 -->
+      <div class="caption-box">
+        <span class="caption-tag">STAGE 05 // TRANSFORMATION</span>
+        <h2 class="caption-title">さぁ、つぎはあなたの番です！</h2>
+        <p class="caption-desc">水準器による画像再構築で、最高の体験を。</p>
       </div>
+
+      <!-- 左から右へシームレスに流れるマーキー画像群 (無限ループのため2セット配置) -->
+      <div class="marquee-container">
+        <div class="marquee-track">
+          <!-- ===== セット1 ===== -->
+          <!-- 3: 元画像 -->
+          <div class="stream-card card-original">
+            <span class="card-badge">ORIGINAL</span>
+            <img src="3.PNG" alt="3 Original" class="stream-img">
+          </div>
+          <!-- 5: 編集後 (光沢) -->
+          <div class="stream-card card-edited">
+            <span class="card-badge">✨ EDITED</span>
+            <img src="5.PNG" alt="5 Edited" class="stream-img">
+          </div>
+          <!-- 6: 元画像 -->
+          <div class="stream-card card-original">
+            <span class="card-badge">ORIGINAL</span>
+            <img src="6.PNG" alt="6 Original" class="stream-img">
+          </div>
+          <!-- 7: 編集後 (光沢) -->
+          <div class="stream-card card-edited">
+            <span class="card-badge">✨ EDITED</span>
+            <img src="7.PNG" alt="7 Edited" class="stream-img">
+          </div>
+          <!-- 8: 元画像 -->
+          <div class="stream-card card-original">
+            <span class="card-badge">ORIGINAL</span>
+            <img src="8.PNG" alt="8 Original" class="stream-img">
+          </div>
+          <!-- 9: 編集後 (光沢) -->
+          <div class="stream-card card-edited">
+            <span class="card-badge">✨ EDITED</span>
+            <img src="9.PNG" alt="9 Edited" class="stream-img">
+          </div>
+
+          <!-- ===== セット2 (シームレスループ用) ===== -->
+          <!-- 3: 元画像 -->
+          <div class="stream-card card-original">
+            <span class="card-badge">ORIGINAL</span>
+            <img src="3.PNG" alt="3 Original" class="stream-img">
+          </div>
+          <!-- 5: 編集後 (光沢) -->
+          <div class="stream-card card-edited">
+            <span class="card-badge">✨ EDITED</span>
+            <img src="5.PNG" alt="5 Edited" class="stream-img">
+          </div>
+          <!-- 6: 元画像 -->
+          <div class="stream-card card-original">
+            <span class="card-badge">ORIGINAL</span>
+            <img src="6.PNG" alt="6 Original" class="stream-img">
+          </div>
+          <!-- 7: 編集後 (光沢) -->
+          <div class="stream-card card-edited">
+            <span class="card-badge">✨ EDITED</span>
+            <img src="7.PNG" alt="7 Edited" class="stream-img">
+          </div>
+          <!-- 8: 元画像 -->
+          <div class="stream-card card-original">
+            <span class="card-badge">ORIGINAL</span>
+            <img src="8.PNG" alt="8 Original" class="stream-img">
+          </div>
+          <!-- 9: 編集後 (光沢) -->
+          <div class="stream-card card-edited">
+            <span class="card-badge">✨ EDITED</span>
+            <img src="9.PNG" alt="9 Edited" class="stream-img">
+          </div>
+        </div>
+      </div>
+
+      <!-- 下部 CTAボタン (指定URLリンク・タップ誘導) -->
+      <div class="cta-wrapper">
+        <div class="cta-bubble">＼ タップしてみて！ 今すぐ体験 ／</div>
+        <a 
+          href="https://suizyunki.github.io/my-html-advance1/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="cta-link-btn"
+        >
+          <span>LevelOverlay1 を起動する</span>
+          <span style="font-size: 1.2rem;">➔</span>
+        </a>
+      </div>
+
     </section>
 
   </main>
 
   <!-- ==========================================================
-       INTERACTION SCRIPTS
-       ========================================================== -->
+       JS: INTERSECTION & VIDEO CONTROL
+       ========================================================== */ -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const container = document.getElementById('snapContainer');
@@ -515,7 +704,7 @@
       const video = document.getElementById('featureVideo');
       const videoNextGuide = document.getElementById('videoNextGuide');
 
-      // インジケータークリックでのスムースジャンプ
+      // ナビゲーションドットのクリック
       dots.forEach(dot => {
         dot.addEventListener('click', () => {
           const idx = parseInt(dot.getAttribute('data-index'), 10);
@@ -523,64 +712,54 @@
         });
       });
 
-      // Intersection Observerによるページ切り替え監視
-      const observerOptions = {
-        root: container,
-        threshold: 0.55 // 画面の過半数が見えた時点でアクティブ判定
-      };
-
-      const sectionObserver = new IntersectionObserver((entries) => {
+      // スクロール監視
+      const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           const idx = Array.from(sections).indexOf(entry.target);
 
           if (entry.isIntersecting) {
             entry.target.classList.add('is-active');
 
-            // ドットのアクティブ更新
             dots.forEach(d => d.classList.remove('active'));
             if (dots[idx]) dots[idx].classList.add('active');
 
-            // セクション4（動画）の制御
+            // ページ4：動画の自動再生
             if (entry.target.id === 'sec-4' && video) {
               video.currentTime = 0;
               video.play().catch(() => {
-                // 自動再生制限の安全処理
                 video.muted = true;
                 video.play();
               });
-              // 開始時に一旦ガイドを控えめにし、ループ・進行にあわせて表示
-              setTimeout(() => {
-                videoNextGuide.classList.add('visible');
-              }, 2500);
             }
-
           } else {
             entry.target.classList.remove('is-active');
 
-            // ページ4から離れたら動画停止
+            // ページ4から離れたら一時停止
             if (entry.target.id === 'sec-4' && video) {
               video.pause();
             }
           }
         });
-      }, observerOptions);
+      }, {
+        root: container,
+        threshold: 0.55
+      });
 
-      sections.forEach(sec => sectionObserver.observe(sec));
+      sections.forEach(sec => observer.observe(sec));
 
-      // 4.mp4：動画終了時ループ＆Next誘導の強調
+      // 動画終了時のループ再生
       if (video) {
         video.addEventListener('ended', () => {
           video.currentTime = 0;
           video.play();
-          videoNextGuide.classList.add('visible');
         });
       }
 
-      // Nextガイドをクリックしたら次のセクションへスクロール
+      // 下部ガイドをクリックしたら次ページへ
       document.querySelectorAll('.next-guide').forEach(guide => {
         guide.addEventListener('click', () => {
-          const currentSection = guide.closest('.section');
-          const next = currentSection.nextElementSibling;
+          const current = guide.closest('.section');
+          const next = current.nextElementSibling;
           if (next) {
             next.scrollIntoView({ behavior: 'smooth' });
           }
